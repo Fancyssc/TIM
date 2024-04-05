@@ -14,13 +14,11 @@ from braincog.base.node.node import *
 from braincog.utils import *
 from braincog.base.utils.criterions import *
 # from braincog.datasets.datasets import *
-from datasets import *
+from utils.datasets import *
 from braincog.model_zoo.resnet import *
 from braincog.model_zoo.convnet import *
 from braincog.model_zoo.vgg_snn import VGG_SNN, SNN5
-# from braincog.model_zoo.fc_snn import SHD_SNN
 from braincog.model_zoo.resnet19_snn import resnet19
-#from braincog.model_zoo.sew_resnet import sew_resnet18, sew_resnet34, sew_resnet50
 from braincog.utils import save_feature_map, setup_seed
 from braincog.base.utils.visualization import plot_tsne_3d, plot_tsne, plot_confusion_matrix, plot_mem_distribution
 
@@ -38,15 +36,10 @@ from timm.scheduler import create_scheduler
 from timm.utils import ApexScaler, NativeScaler
 
 from torch.utils.tensorboard import SummaryWriter
-# from TIM_imgnet import TIM_imgnet
-# from TIMonAll import TIMonAll
-# from spikformer_braincog_DVS_crossing_conv import nomni
-# from ptflops import get_model_complexity_info
-# from thop import profile, clever_format
-# from spikformer_braincog_crossing_conv import baselineTIM_c100_alpha2
-from spikformer_braincog_DVS_crossing_conv import nomni
+from models.spikformer_braincog_DVS import spikformer_dvs
+from models.spikformer_braincog_DVS import spikformer_shd
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 torch.backends.cudnn.benchmark = True
@@ -254,7 +247,7 @@ parser.add_argument('--pin-mem', action='store_true', default=False,
                     help='Pin CPU memory in DataLoader for more efficient (sometimes) transfer to GPU.')
 parser.add_argument('--no-prefetcher', action='store_true', default=False,
                     help='disable fast prefetcher')
-parser.add_argument('--output', default='/home/shensicheng/code/braincog_trick/rebuttal', type=str, metavar='PATH',
+parser.add_argument('--output', default='/home/shensicheng/code/TIM/logs', type=str, metavar='PATH',
                     help='path to output folder (default: none, current dir)')
 parser.add_argument('--tensorboard-dir', default='./runs', type=str)
 parser.add_argument('--eval-metric', default='top1', type=str, metavar='EVAL_METRIC',

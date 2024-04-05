@@ -301,6 +301,47 @@ def get_cifar10_data(batch_size, num_workers=8, same_da=False, **kwargs):
     )
     return train_loader, test_loader, None, None
 
+def get_shd_data(batch_size, step, **kwargs):
+    """
+    获取SHD数据
+    https://ieeexplore.ieee.org/abstract/document/9311226
+    :param batch_size: batch size
+    :param step: 仿真步长
+    :param kwargs:
+    :return: (train loader, test loader, mixup_active, mixup_fn)
+    :format: (b,t,c,len) 不同于vision, audio中c为1, 并且没有h,w; 只有len=700
+    """
+    sensor_size = tonic.datasets.SHD.sensor_size
+    train_transform = transforms.Compose([
+        # tonic.transforms.Denoise(filter_time=10000),
+        # tonic.transforms.DropEvent(p=0.1),
+        tonic.transforms.ToFrame(sensor_size=sensor_size, n_time_bins=step),
+    ])
+    test_transform = transforms.Compose([
+        # tonic.transforms.Denoise(filter_time=10000),
+        tonic.transforms.ToFrame(sensor_size=sensor_size, n_time_bins=step),
+    ])
+
+    train_dataset = tonic.datasets.SHD(os.path.join(DATA_DIR, 'DVS/SHD'),
+                                              transform=train_transform, train=True)
+
+    test_dataset = tonic.datasets.SHD(os.path.join(DATA_DIR, 'DVS/SHD'),
+                                             transform=test_transform, train=False)
+
+
+    train_loader = torch.utils.data.DataLoader(
+        train_dataset, batch_size=batch_size,
+        pin_memory=True, drop_last=True, num_workers=8,
+        shuffle=True,
+    )
+
+    test_loader = torch.utils.data.DataLoader(
+        test_dataset, batch_size=batch_size,
+        pin_memory=True, drop_last=False, num_workers=2,
+        shuffle=False,
+    )
+
+    return train_loader, test_loader, None, None
 
 def get_cifar100_data(batch_size, num_workers=8, same_data=False, *args, **kwargs):
     # """
