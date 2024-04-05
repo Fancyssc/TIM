@@ -1,4 +1,4 @@
-# TIM: An Efficient Temporal Interaction Module for Spiking Transformer, [IJCAI](https://arxiv.org/abs/2401.11687)
+# TIM: An Efficient Temporal Interaction Module for Spiking Transformer, [IJCAI2024](https://arxiv.org/abs/2401.11687)
 
 ![Alt text](img/TIM.png)
 
