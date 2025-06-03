@@ -27,6 +27,11 @@ pip install braincog
 **Datasets Needed**: CIFAR10-DVS, N-CALTECH101, UCF101DVS, NCARS, HMDB51DVS, SHD
 Please unzip data to ```/data/datasets``` so that dataset.py may directly load corresponding dataset for training
 
+#### HMDB51DVS
+We have received some feedback indicating that generating the .mat files for HMDB51DVS using certain methods may cause the process to hang, making it impossible to load the data using BrainCog’s scripts. Therefore, we have provided the preprocessed data on a cloud drive. (Please note that first-time users may need to register to access the drive.)
+
+Download link：[here](https://www.123912.com/s/Q2govd-hsn5H)
+
 ## Model Training
 For most DVS data, we prefer using the event-frame size of 64 but not 128 here.
 Please adjust your hyper parameters here. 10 is set as the default value of time step numbers.
